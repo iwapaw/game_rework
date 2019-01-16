@@ -81,18 +81,8 @@ class StoryGameScreen:  # a class that constructs a single instance of the game 
         StoryGameScreen.gameScreenStringDictionary.clear()
 
 
-
-currentScreen = StoryGameScreen(
-                StoryGameScreen.string0,
-                StoryGameScreen.string1,
-                StoryGameScreen.string2,
-                StoryGameScreen.string3,
-                StoryGameScreen.string4,
-                StoryGameScreen.string5,
-                StoryGameScreen.string6,
-                StoryGameScreen.left,
-                StoryGameScreen.right)
-
+chosenLeft = False
+chosenRight = False
 
 StoryGameScreen.currentStoryString = "It's been almost 30 months since Marius left with proconsul Julius Caesar army's. You're looking at the sunset as slaves prepare the house for the night."
 StoryGameScreen.currentLeftChoice = "Keep staring"
@@ -100,3 +90,20 @@ StoryGameScreen.currentRightChoice = "Close your eyes"
 StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
                               StoryGameScreen.currentLeftChoice,
                               StoryGameScreen.currentRightChoice)
+
+currentScreen = StoryGameScreen(
+                                StoryGameScreen.gameScreenStringDictionary['string0'],
+                                StoryGameScreen.gameScreenStringDictionary['string1'],
+                                StoryGameScreen.gameScreenStringDictionary['string2'],
+                                StoryGameScreen.gameScreenStringDictionary['string3'],
+                                StoryGameScreen.gameScreenStringDictionary['string4'],
+                                StoryGameScreen.gameScreenStringDictionary['string5'],
+                                StoryGameScreen.gameScreenStringDictionary['string6'],
+                                StoryGameScreen.gameScreenStringDictionary['left'],
+                                StoryGameScreen.gameScreenStringDictionary['right'])
+
+
+
+
+
+
