@@ -197,7 +197,7 @@ def goLeftString(): # preparing the data for the next screen after choosing left
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter() #method sets new properties to the current screen instance
     gameWindowMain() # refreshes the main game window
-    config.chosenLeft = True
+    gameScreenClasses.chosenLeft = True
 
 def goRightString(): # preparing the data for the next screen after choosing right
     gameScreenClasses.StoryGameScreen.dictionaryCleaner() # cleans the dict
@@ -206,7 +206,7 @@ def goRightString(): # preparing the data for the next screen after choosing rig
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter() # method sets new properties to the current screen instance
     gameWindowMain() # refreshes the main game window
-    config.chosenRight = True
+    gameScreenClasses.chosenRight = True
 
 
 
