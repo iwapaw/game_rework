@@ -10,7 +10,7 @@ from pygame.locals import *
 # ---------------------------------- git link
 # ---------------------------------- experimental full screen
 # ---------------------------------- ..............
-# -- add a save feature
+# ---------------------------------- add a save feature
 # ---------- use the save feature to add functionality to the gear icon?
 # -------------------------------------------------
 
@@ -191,22 +191,22 @@ def onScreenButton(textOnButton, xButtonCoordinate, yButtonCoordinate, buttonWid
 
 
 def goLeftString(): # preparing the data for the next screen after choosing left
-    gameScreenClasses.StoryGameScreen.dictionaryCleaner() # cleans the dict
+    gameScreenClasses.StoryGameScreen.dictionaryCleaner()  # cleans the dict
     gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter() #method sets new properties to the current screen instance
-    gameWindowMain() # refreshes the main game window
-    gameScreenClasses.chosenLeft = True
+   # gameWindowMain() # refreshes the main game window
+    config.chosenLeft = True
 
 def goRightString(): # preparing the data for the next screen after choosing right
-    gameScreenClasses.StoryGameScreen.dictionaryCleaner() # cleans the dict
+    gameScreenClasses.StoryGameScreen.dictionaryCleaner()  # cleans the dict
     gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter() # method sets new properties to the current screen instance
-    gameWindowMain() # refreshes the main game window
-    gameScreenClasses.chosenRight = True
+   # gameWindowMain() # refreshes the main game window
+    config.chosenRight = True
 
 
 
@@ -339,12 +339,4 @@ def main():
 
 # gameIntro(gameMainMenu)
 main()
-#
-# gameScreenClasses.StoryGameScreen.currentStoryString = "It's been almost 30 months since Marius left with proconsul Julius Caesar army's. You're looking at the sunset as slaves prepare the house for the night."
-# gameScreenClasses.StoryGameScreen.currentLeftChoice = "Keep staring"
-# gameScreenClasses.StoryGameScreen.currentRightChoice = "Close your eyes"
-# gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
-#                                                 gameScreenClasses.StoryGameScreen.currentLeftChoice,
-#                                                 gameScreenClasses.StoryGameScreen.currentRightChoice)
-
 

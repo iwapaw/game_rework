@@ -1,4 +1,4 @@
-import textwrap
+import textwrap, config
 
 
 class StoryGameScreen:  # a class that constructs a single instance of the game screen
@@ -84,7 +84,7 @@ class StoryGameScreen:  # a class that constructs a single instance of the game 
 chosenLeft = False
 chosenRight = False
 
-StoryGameScreen.currentStoryString = "It's been almost 30 months since Marius left with proconsul Julius Caesar army's. You're looking at the sunset as slaves prepare the house for the night."
+StoryGameScreen.currentStoryString = "It's been almost 30 months since Marius left with proconsul Julius Caesar's army. You're looking at the sunset as slaves prepare the house for the night."
 StoryGameScreen.currentLeftChoice = "Keep staring"
 StoryGameScreen.currentRightChoice = "Close your eyes"
 StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
@@ -103,6 +103,13 @@ currentScreen = StoryGameScreen(
                                 StoryGameScreen.gameScreenStringDictionary['right'])
 
 
+
+StoryGameScreen.currentStoryString = "left "
+StoryGameScreen.currentLeftChoice = "Ke"
+StoryGameScreen.currentRightChoice = "Clo"
+StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
+                              StoryGameScreen.currentLeftChoice,
+                              StoryGameScreen.currentRightChoice)
 
 
 
