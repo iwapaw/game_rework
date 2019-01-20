@@ -91,15 +91,22 @@ class StoryGameScreen:  # a class that constructs a single instance of the game 
 
 chosenLeft = False
 chosenRight = False
+currentStoryKey = " "
+currentLeftKey = " "
+currentRightKey = " "
+currentStoryString = ""
+currentLeftChoice = ""
+currentRightChoice = ""
 
+# below the initial story string
 StoryGameScreen.currentStoryString = "It's been almost 30 months since Marius left with proconsul Julius Caesar's army. You're looking at the sunset as slaves prepare the house for the night."
-StoryGameScreen.currentLeftChoice = "Keep staring"
-StoryGameScreen.currentRightChoice = "Close your eyes"
+StoryGameScreen.currentLeftChoice = "Choose: Keep staring"
+StoryGameScreen.currentRightChoice = "Choose: Close your eyes"
 StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
                               StoryGameScreen.currentLeftChoice,
                               StoryGameScreen.currentRightChoice)
 
-currentScreen = StoryGameScreen(
+currentScreen = StoryGameScreen( # store the story in the dictionary
                                 StoryGameScreen.gameScreenStringDictionary['string0'],
                                 StoryGameScreen.gameScreenStringDictionary['string1'],
                                 StoryGameScreen.gameScreenStringDictionary['string2'],
@@ -110,39 +117,46 @@ currentScreen = StoryGameScreen(
                                 StoryGameScreen.gameScreenStringDictionary['left'],
                                 StoryGameScreen.gameScreenStringDictionary['right'])
 
+def sendToChopper(string, left, right):
+    StoryGameScreen.stringChopper(string,
+                                  left,
+                                  right)
+
 
 def takeCurrentStoryString():
-    if config.xStoryCoord == 1 and config.yStoryCoord == 0:
-        StoryGameScreen.currentStoryString = "left "
-        StoryGameScreen.currentLeftChoice = "Ke"
-        StoryGameScreen.currentRightChoice = "Clo"
-        StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
-                                                        StoryGameScreen.currentLeftChoice,
-                                                        StoryGameScreen.currentRightChoice)
+        # ---- declarations ---------------------------------------------------------------------------------------
+        global currentStoryKey
+        global currentLeftKey
+        global currentRightKey
+        global currentStoryString
+        global currentLeftChoice
+        global currentRightChoice
+        storyStringDictionary = {
+            'x01y00Left' : 'left2',
+            'x01y00Right': 'right2',
+            'x01y00Story': 'eyes hurt',
+            'x00y01Story': 'slaves working'
+        }
+        # currentStoryString = ""
+        # currentLeftChoice = ""
+        # currentRightChoice = ""
 
-    if config.xStoryCoord == 0 and config.yStoryCoord == 1:
-        StoryGameScreen.currentStoryString = "right "
-        StoryGameScreen.currentLeftChoice = "Ke;;aasd"
-        StoryGameScreen.currentRightChoice = "Cldaddsasdo"
-        StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
-                                                        StoryGameScreen.currentLeftChoice,
-                                                        StoryGameScreen.currentRightChoice)
+        # ---- story strings --------------------------------------------------------------------------------------
+        if currentStoryKey == 'x01y00Left':
+            currentStoryKey = 'x01y00Left'
+            currentLeftKey = 'x01y00Left'
+            currentRightKey = 'x01y00Right'
+            StoryGameScreen.currentStoryString = storyStringDictionary[currentStoryKey]
+            StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
+            StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
 
-    if config.xStoryCoord == 1 and config.yStoryCoord == 1:
-        StoryGameScreen.currentStoryString = "went from left to right "
-        StoryGameScreen.currentLeftChoice = "Ke2"
-        StoryGameScreen.currentRightChoice = "Clo2"
-        StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
-                                                        StoryGameScreen.currentLeftChoice,
-                                                        StoryGameScreen.currentRightChoice)
 
-    if config.yStoryCoord == 2 and config.xStoryCoord == 1:
-        StoryGameScreen.currentStoryString = "went from left to right to left "
-        StoryGameScreen.currentLeftChoice = "Ke;;aasd2"
-        StoryGameScreen.currentRightChoice = "Cldaddsasdo2"
+
+        # ---- chop story ----------------------------------------------------------------------------------------
         StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
                                       StoryGameScreen.currentLeftChoice,
                                       StoryGameScreen.currentRightChoice)
+
 
 
 
