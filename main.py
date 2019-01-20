@@ -24,6 +24,8 @@ pygame.display.set_caption('Into the Elysium') # windows title
 FPSCLOCK = pygame.time.Clock() # initialize the frame counter
 gearIconInUnicode = u"\u2699" # unicode for gear character
 
+chosenLeft = False
+chosenRight = False
 mouseClicked = pygame.mouse.get_pressed()  # variable to store mouse clicks
 mousePosition = pygame.mouse.get_pos()     # variable to store mouse position
 
@@ -68,7 +70,7 @@ GAMETITLECOLOURBRIGHTER =           (235,157,  0)
 
 
 
-def gameIntro(goToTheMainMenu=None):  # displays title screen
+def gameIntro():  # displays title screen
     intro = True  # flag to execute intro
 
     while intro:
@@ -191,23 +193,22 @@ def onScreenButton(textOnButton, xButtonCoordinate, yButtonCoordinate, buttonWid
 
 
 def goLeftString(): # preparing the data for the next screen after choosing left
+    global chosenLeft
     gameScreenClasses.StoryGameScreen.dictionaryCleaner()  # cleans the dict
     gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter() #method sets new properties to the current screen instance
-   # gameWindowMain() # refreshes the main game window
-    config.chosenLeft = True
+    chosenLeft = True
 
 def goRightString(): # preparing the data for the next screen after choosing right
+    global chosenRight
     gameScreenClasses.StoryGameScreen.dictionaryCleaner()  # cleans the dict
     gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter() # method sets new properties to the current screen instance
-   # gameWindowMain() # refreshes the main game window
-    config.chosenRight = True
-
+    chosenRight = True
 
 
 # function draws the gear icon
@@ -239,6 +240,8 @@ def optionsButtonGear (xButtonCoordinateGear, yButtonCoordinateGear, gearWidth, 
 # main game window
 def gameWindowMain(): # function to blit the game flow
     gameRunning = True # variable the controls the game flow
+    global chosenRight
+    global chosenLeft
 
     while gameRunning: # game loop running as long as not quit or back to menu
         for event in pygame.event.get():
@@ -275,6 +278,35 @@ def gameWindowMain(): # function to blit the game flow
                        GAMETITLECOLOURBRIGHTER,gameMainMenu, goRightString) # button for the right choice
         optionsButtonGear (xGearButtonCoordinateGameWindow, yGearButtonCoordinateGameWindow, gearButtonWidth,
                            gearButtonHeight,GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,None) # shifts between menu and gameplay
+
+        if chosenLeft == True:
+            gameScreenClasses.StoryGameScreen.currentStoryString = "left "
+            gameScreenClasses.StoryGameScreen.currentLeftChoice = "Ke"
+            gameScreenClasses.StoryGameScreen.currentRightChoice = "Clo"
+            gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
+                                                            gameScreenClasses.StoryGameScreen.currentLeftChoice,
+                                                            gameScreenClasses.StoryGameScreen.currentRightChoice)
+            chosenRight = False
+            chosenLeft = False
+        if chosenRight == True:
+            gameScreenClasses.StoryGameScreen.currentStoryString = "right "
+            gameScreenClasses.StoryGameScreen.currentLeftChoice = "Ke;;aasd"
+            gameScreenClasses.StoryGameScreen.currentRightChoice = "Cldaddsasdo"
+            gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
+                                                            gameScreenClasses.StoryGameScreen.currentLeftChoice,
+                                                            gameScreenClasses.StoryGameScreen.currentRightChoice)
+            chosenRight = False
+            chosenLeft = False
+
+        if chosenLeft == True:
+            gameScreenClasses.StoryGameScreen.currentStoryString = "left2 "
+            gameScreenClasses.StoryGameScreen.currentLeftChoice = "Ke2"
+            gameScreenClasses.StoryGameScreen.currentRightChoice = "Clo2"
+            gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
+                                                            gameScreenClasses.StoryGameScreen.currentLeftChoice,
+                                                            gameScreenClasses.StoryGameScreen.currentRightChoice)
+            chosenRight = False
+            chosenLeft = False
 
 
         pygame.display.update()
@@ -338,5 +370,8 @@ def main():
 
 
 # gameIntro(gameMainMenu)
-main()
+# main()
+
+
+if __name__ == '__main__': main()
 

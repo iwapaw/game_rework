@@ -4,9 +4,17 @@ import textwrap, config
 class StoryGameScreen:  # a class that constructs a single instance of the game screen
     # below a dictionary declaration
     # there are seven entries - each one for every line on the game screen
-    gameScreenStringDictionary = {'string0': '', 'string1': '', 'string2': '', 'string3': '', 'string4': '',
+    gameScreenStringDictionary = {'string0': '',
+                                  'string1': '',
+                                  'string2': '',
+                                  'string3': '',
+                                  'string4': '',
                                   'string5': '',
-                                  'string6': '', 'left': '', 'right': ''}
+                                  'string6': '',
+                                  'left': '',
+                                  'right': '',
+                                  'leftFlag': 0,
+                                  'rightFlag': 0}
 
     currentStoryString = " "
     currentLeftChoice = " "
@@ -103,13 +111,21 @@ currentScreen = StoryGameScreen(
                                 StoryGameScreen.gameScreenStringDictionary['right'])
 
 
-
-StoryGameScreen.currentStoryString = "left "
-StoryGameScreen.currentLeftChoice = "Ke"
-StoryGameScreen.currentRightChoice = "Clo"
-StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
-                              StoryGameScreen.currentLeftChoice,
-                              StoryGameScreen.currentRightChoice)
+#if StoryGameScreen.gameScreenStringDictionary['leftFlag'] == 1:
+# StoryGameScreen.currentStoryString = "left "
+# StoryGameScreen.currentLeftChoice = "Ke"
+# StoryGameScreen.currentRightChoice = "Clo"
+# StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
+#                               StoryGameScreen.currentLeftChoice,
+#                               StoryGameScreen.currentRightChoice)
+#
+#
+# StoryGameScreen.currentStoryString = "right "
+# StoryGameScreen.currentLeftChoice = "Ke;;aasd"
+# StoryGameScreen.currentRightChoice = "Cldaddsasdo"
+# StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
+#                               StoryGameScreen.currentLeftChoice,
+#                               StoryGameScreen.currentRightChoice)
 
 
 
