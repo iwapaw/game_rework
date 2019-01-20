@@ -112,49 +112,38 @@ currentScreen = StoryGameScreen(
 
 
 def takeCurrentStoryString():
-    if config.leftScreenQueue == 0 and config.gameScreenCounter == 0:
+    if config.xStoryCoord == 1 and config.yStoryCoord == 0:
         StoryGameScreen.currentStoryString = "left "
         StoryGameScreen.currentLeftChoice = "Ke"
         StoryGameScreen.currentRightChoice = "Clo"
         StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
                                                         StoryGameScreen.currentLeftChoice,
                                                         StoryGameScreen.currentRightChoice)
-        # config.chosenRight = False
-        # config.chosenLeft = False
-        config.gameScreenCounter += 1
 
-    if config.rightScreenQueue == 0 and config.gameScreenCounter == 0:
+    if config.xStoryCoord == 0 and config.yStoryCoord == 1:
         StoryGameScreen.currentStoryString = "right "
         StoryGameScreen.currentLeftChoice = "Ke;;aasd"
         StoryGameScreen.currentRightChoice = "Cldaddsasdo"
         StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
                                                         StoryGameScreen.currentLeftChoice,
                                                         StoryGameScreen.currentRightChoice)
-        # config.chosenRight = False
-        # config.chosenLeft = False
-        config.gameScreenCounter += 1
 
-    if config.leftScreenQueue == 1 and config.gameScreenCounter == 1:
-        StoryGameScreen.currentStoryString = "left2 "
+    if config.xStoryCoord == 1 and config.yStoryCoord == 1:
+        StoryGameScreen.currentStoryString = "went from left to right "
         StoryGameScreen.currentLeftChoice = "Ke2"
         StoryGameScreen.currentRightChoice = "Clo2"
         StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
                                                         StoryGameScreen.currentLeftChoice,
                                                         StoryGameScreen.currentRightChoice)
-        # config.chosenRight = False
-        # config.chosenLeft = False
-        config.gameScreenCounter += 1
 
-    if config.rightScreenQueue == 1 and config.gameScreenCounter == 1:
-        StoryGameScreen.currentStoryString = "right2 "
+    if config.yStoryCoord == 2 and config.xStoryCoord == 1:
+        StoryGameScreen.currentStoryString = "went from left to right to left "
         StoryGameScreen.currentLeftChoice = "Ke;;aasd2"
         StoryGameScreen.currentRightChoice = "Cldaddsasdo2"
         StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
                                       StoryGameScreen.currentLeftChoice,
                                       StoryGameScreen.currentRightChoice)
-        # config.chosenRight = False
-        # config.chosenLeft = False
-        config.gameScreenCounter += 1
+
 
 
 
