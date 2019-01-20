@@ -1,4 +1,4 @@
-import textwrap, config
+import textwrap, config, time
 
 
 class StoryGameScreen:  # a class that constructs a single instance of the game screen
@@ -111,21 +111,50 @@ currentScreen = StoryGameScreen(
                                 StoryGameScreen.gameScreenStringDictionary['right'])
 
 
-#if StoryGameScreen.gameScreenStringDictionary['leftFlag'] == 1:
-# StoryGameScreen.currentStoryString = "left "
-# StoryGameScreen.currentLeftChoice = "Ke"
-# StoryGameScreen.currentRightChoice = "Clo"
-# StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
-#                               StoryGameScreen.currentLeftChoice,
-#                               StoryGameScreen.currentRightChoice)
-#
-#
-# StoryGameScreen.currentStoryString = "right "
-# StoryGameScreen.currentLeftChoice = "Ke;;aasd"
-# StoryGameScreen.currentRightChoice = "Cldaddsasdo"
-# StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
-#                               StoryGameScreen.currentLeftChoice,
-#                               StoryGameScreen.currentRightChoice)
+def takeCurrentStoryString():
+    if config.leftScreenQueue == 0 and config.gameScreenCounter == 0:
+        StoryGameScreen.currentStoryString = "left "
+        StoryGameScreen.currentLeftChoice = "Ke"
+        StoryGameScreen.currentRightChoice = "Clo"
+        StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
+                                                        StoryGameScreen.currentLeftChoice,
+                                                        StoryGameScreen.currentRightChoice)
+        # config.chosenRight = False
+        # config.chosenLeft = False
+        config.gameScreenCounter += 1
+
+    if config.rightScreenQueue == 0 and config.gameScreenCounter == 0:
+        StoryGameScreen.currentStoryString = "right "
+        StoryGameScreen.currentLeftChoice = "Ke;;aasd"
+        StoryGameScreen.currentRightChoice = "Cldaddsasdo"
+        StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
+                                                        StoryGameScreen.currentLeftChoice,
+                                                        StoryGameScreen.currentRightChoice)
+        # config.chosenRight = False
+        # config.chosenLeft = False
+        config.gameScreenCounter += 1
+
+    if config.leftScreenQueue == 1 and config.gameScreenCounter == 1:
+        StoryGameScreen.currentStoryString = "left2 "
+        StoryGameScreen.currentLeftChoice = "Ke2"
+        StoryGameScreen.currentRightChoice = "Clo2"
+        StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
+                                                        StoryGameScreen.currentLeftChoice,
+                                                        StoryGameScreen.currentRightChoice)
+        # config.chosenRight = False
+        # config.chosenLeft = False
+        config.gameScreenCounter += 1
+
+    if config.rightScreenQueue == 1 and config.gameScreenCounter == 1:
+        StoryGameScreen.currentStoryString = "right2 "
+        StoryGameScreen.currentLeftChoice = "Ke;;aasd2"
+        StoryGameScreen.currentRightChoice = "Cldaddsasdo2"
+        StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
+                                      StoryGameScreen.currentLeftChoice,
+                                      StoryGameScreen.currentRightChoice)
+        # config.chosenRight = False
+        # config.chosenLeft = False
+        config.gameScreenCounter += 1
 
 
 

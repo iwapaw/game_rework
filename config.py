@@ -4,4 +4,9 @@
 chosenLeft = False  # a flag for path branching
 chosenRight = False  # a flag for path branching
 
+leftScreenQueue = 0
+rightScreenQueue = 0
+
+gameScreenCounter = 0
+
 

@@ -15,7 +15,7 @@ from pygame.locals import *
 # -------------------------------------------------
 
 # global variables and initializations -------------------------------------------------------------------------
-FPS = 60 # frames per second
+FPS = 30 # frames per second
 WINDOWWIDTH = 1200
 WINDOWHEIGHT = 600 # screen resolution for windowed mode
 pygame.init()  # initialize
@@ -193,22 +193,24 @@ def onScreenButton(textOnButton, xButtonCoordinate, yButtonCoordinate, buttonWid
 
 
 def goLeftString(): # preparing the data for the next screen after choosing left
-    global chosenLeft
     gameScreenClasses.StoryGameScreen.dictionaryCleaner()  # cleans the dict
     gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter() #method sets new properties to the current screen instance
-    chosenLeft = True
+    gameScreenClasses.takeCurrentStoryString()
+    config.leftScreenQueue += 1
+
 
 def goRightString(): # preparing the data for the next screen after choosing right
-    global chosenRight
     gameScreenClasses.StoryGameScreen.dictionaryCleaner()  # cleans the dict
     gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter() # method sets new properties to the current screen instance
-    chosenRight = True
+    gameScreenClasses.takeCurrentStoryString()
+    config.rightScreenQueue += 1
+
 
 
 # function draws the gear icon
@@ -278,36 +280,6 @@ def gameWindowMain(): # function to blit the game flow
                        GAMETITLECOLOURBRIGHTER,gameMainMenu, goRightString) # button for the right choice
         optionsButtonGear (xGearButtonCoordinateGameWindow, yGearButtonCoordinateGameWindow, gearButtonWidth,
                            gearButtonHeight,GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,None) # shifts between menu and gameplay
-
-        if chosenLeft == True:
-            gameScreenClasses.StoryGameScreen.currentStoryString = "left "
-            gameScreenClasses.StoryGameScreen.currentLeftChoice = "Ke"
-            gameScreenClasses.StoryGameScreen.currentRightChoice = "Clo"
-            gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
-                                                            gameScreenClasses.StoryGameScreen.currentLeftChoice,
-                                                            gameScreenClasses.StoryGameScreen.currentRightChoice)
-            chosenRight = False
-            chosenLeft = False
-        if chosenRight == True:
-            gameScreenClasses.StoryGameScreen.currentStoryString = "right "
-            gameScreenClasses.StoryGameScreen.currentLeftChoice = "Ke;;aasd"
-            gameScreenClasses.StoryGameScreen.currentRightChoice = "Cldaddsasdo"
-            gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
-                                                            gameScreenClasses.StoryGameScreen.currentLeftChoice,
-                                                            gameScreenClasses.StoryGameScreen.currentRightChoice)
-            chosenRight = False
-            chosenLeft = False
-
-        if chosenLeft == True:
-            gameScreenClasses.StoryGameScreen.currentStoryString = "left2 "
-            gameScreenClasses.StoryGameScreen.currentLeftChoice = "Ke2"
-            gameScreenClasses.StoryGameScreen.currentRightChoice = "Clo2"
-            gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
-                                                            gameScreenClasses.StoryGameScreen.currentLeftChoice,
-                                                            gameScreenClasses.StoryGameScreen.currentRightChoice)
-            chosenRight = False
-            chosenLeft = False
-
 
         pygame.display.update()
         FPSCLOCK.tick(FPS)
