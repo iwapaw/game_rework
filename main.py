@@ -10,12 +10,12 @@ from pygame.locals import *
 # ---------------------------------- git link
 # ---------------------------------- experimental full screen
 # ---------------------------------- ..............
-# -- add a save feature
+# ---------------------------------- add a save feature
 # ---------- use the save feature to add functionality to the gear icon?
 # -------------------------------------------------
 
 # global variables and initializations -------------------------------------------------------------------------
-FPS = 60 # frames per second
+FPS = 30 # frames per second
 WINDOWWIDTH = 1200
 WINDOWHEIGHT = 600 # screen resolution for windowed mode
 pygame.init()  # initialize
@@ -24,6 +24,8 @@ pygame.display.set_caption('Into the Elysium') # windows title
 FPSCLOCK = pygame.time.Clock() # initialize the frame counter
 gearIconInUnicode = u"\u2699" # unicode for gear character
 
+chosenLeft = False
+chosenRight = False
 mouseClicked = pygame.mouse.get_pressed()  # variable to store mouse clicks
 mousePosition = pygame.mouse.get_pos()     # variable to store mouse position
 
@@ -68,7 +70,7 @@ GAMETITLECOLOURBRIGHTER =           (235,157,  0)
 
 
 
-def gameIntro(goToTheMainMenu=None):  # displays title screen
+def gameIntro():  # displays title screen
     intro = True  # flag to execute intro
 
     while intro:
@@ -189,24 +191,26 @@ def onScreenButton(textOnButton, xButtonCoordinate, yButtonCoordinate, buttonWid
     DISPLAYSURF.blit(buttonText, buttonPosition)   # blits the object
 
 
-
 def goLeftString(): # preparing the data for the next screen after choosing left
-    gameScreenClasses.StoryGameScreen.dictionaryCleaner() # cleans the dict
+    gameScreenClasses.StoryGameScreen.dictionaryCleaner()  # cleans the dict
     gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
-                                                    gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
-    gameScreenClasses.StoryGameScreen.current_screen_setter() #method sets new properties to the current screen instance
-    gameWindowMain() # refreshes the main game window
-    config.chosenLeft = True
+                                                    gameScreenClasses.StoryGameScreen.currentRightChoice)  # passing strings and choices to the chopper
+    gameScreenClasses.StoryGameScreen.current_screen_setter()  #method sets new properties to the current screen instance
+    if gameScreenClasses.StoryGameScreen.currentLeftChoice == "Choose: Keep staring":   # to set the second screen properly
+        gameScreenClasses.currentStoryKey = 'x01y00Left'
+    gameScreenClasses.takeCurrentStoryString()
+
 
 def goRightString(): # preparing the data for the next screen after choosing right
-    gameScreenClasses.StoryGameScreen.dictionaryCleaner() # cleans the dict
+    gameScreenClasses.StoryGameScreen.dictionaryCleaner()  # cleans the dict
     gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
-                                                    gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
-    gameScreenClasses.StoryGameScreen.current_screen_setter() # method sets new properties to the current screen instance
-    gameWindowMain() # refreshes the main game window
-    config.chosenRight = True
+                                                    gameScreenClasses.StoryGameScreen.currentRightChoice)  # passing strings and choices to the chopper
+    gameScreenClasses.StoryGameScreen.current_screen_setter()  # method sets new properties to the current screen instance
+    if gameScreenClasses.StoryGameScreen.currentRightChoice == "Choose: Close your eyes":  # to set the second screen properly
+        gameScreenClasses.currentStoryKey = 'x00y01Right'
+    gameScreenClasses.takeCurrentStoryString()
 
 
 
@@ -239,6 +243,8 @@ def optionsButtonGear (xButtonCoordinateGear, yButtonCoordinateGear, gearWidth, 
 # main game window
 def gameWindowMain(): # function to blit the game flow
     gameRunning = True # variable the controls the game flow
+    global chosenRight
+    global chosenLeft
 
     while gameRunning: # game loop running as long as not quit or back to menu
         for event in pygame.event.get():
@@ -275,7 +281,6 @@ def gameWindowMain(): # function to blit the game flow
                        GAMETITLECOLOURBRIGHTER,gameMainMenu, goRightString) # button for the right choice
         optionsButtonGear (xGearButtonCoordinateGameWindow, yGearButtonCoordinateGameWindow, gearButtonWidth,
                            gearButtonHeight,GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,None) # shifts between menu and gameplay
-
 
         pygame.display.update()
         FPSCLOCK.tick(FPS)
@@ -322,7 +327,7 @@ def toggleFullScreen(): # function goes full screen
 
 
 def main():
-    global FPSCLOCK, DISPLAYSURF # global declaration of frame counter and display surface object
+    global FPSCLOCK, DISPLAYSURF  # global declaration of frame counter and display surface object
 
     while True:  # main game loop
         for event in pygame.event.get():
@@ -338,13 +343,8 @@ def main():
 
 
 # gameIntro(gameMainMenu)
-main()
-#
-# gameScreenClasses.StoryGameScreen.currentStoryString = "It's been almost 30 months since Marius left with proconsul Julius Caesar army's. You're looking at the sunset as slaves prepare the house for the night."
-# gameScreenClasses.StoryGameScreen.currentLeftChoice = "Keep staring"
-# gameScreenClasses.StoryGameScreen.currentRightChoice = "Close your eyes"
-# gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
-#                                                 gameScreenClasses.StoryGameScreen.currentLeftChoice,
-#                                                 gameScreenClasses.StoryGameScreen.currentRightChoice)
+# main()
 
+
+if __name__ == '__main__': main()
 

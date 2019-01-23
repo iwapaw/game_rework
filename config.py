@@ -4,4 +4,9 @@
 chosenLeft = False  # a flag for path branching
 chosenRight = False  # a flag for path branching
 
+xStoryCoord = 0  # variables to follow player's path on the x,y axis
+yStoryCoord = 0
+
+gameScreenCounter = 0
+
 
