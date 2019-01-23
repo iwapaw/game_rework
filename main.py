@@ -97,6 +97,7 @@ def gameIntro():  # displays title screen
 
         # if the button is clicked and the main menu function is passed, it executes the main function
         if mouseClicked[0] == 1:
+            saveGame()
             pygame.time.delay(300)
             break
 
@@ -150,7 +151,7 @@ def gameMainMenu(): # main menu and settings
                        gameMainMenu, None)  # calls the button function - load game
         onScreenButton('Save', xButtonCoordinateCenterScreen, thirdMenuButtonHeight, gameButtonWidth, gameButtonHeight,
                        GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,
-                       gameMainMenu, None)  # calls the button function - save game
+                       gameMainMenu, saveGame)  # calls the button function - save game
         onScreenButton('Quit', xButtonCoordinateCenterScreen, fourthMenuButtonHeight, gameButtonWidth, gameButtonHeight,
                        GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,
                        gameMainMenu, quitQameButton)  # calls the button function - quit
@@ -162,9 +163,9 @@ def gameMainMenu(): # main menu and settings
                        GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,
                        gameMainMenu, infoScreen)  # calls the button function - quit
 
-        optionsButtonGear (xGearButtonCoordinateGameWindow, yGearButtonCoordinateGameWindow, gearButtonWidth,
+        optionsButtonGear(xGearButtonCoordinateGameWindow, yGearButtonCoordinateGameWindow, gearButtonWidth,
                            gearButtonHeight,
-                           GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,None) # shifts between menu and gameplay
+                           GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER, None)  # shifts between menu and gameplay
 
         pygame.display.update()
         FPSCLOCK.tick(FPS)
@@ -213,6 +214,15 @@ def goRightString(): # preparing the data for the next screen after choosing rig
     gameScreenClasses.takeCurrentStoryString()
 
 
+def saveGame():  # saves the game state - writes contents of the story log into binary file
+    with open('game_save.obj', 'wb') as output_file:
+        pickle.dump(gameScreenClasses.storyLog, output_file, pickle.HIGHEST_PROTOCOL)
+
+
+def loadGame():  # loads a previously saved game state
+    with open('save_game.obj', 'rb') as input_file:
+        gameScreenClasses.storyLog = pickle.load(input_file)
+
 
 # function draws the gear icon
 def optionsButtonGear (xButtonCoordinateGear, yButtonCoordinateGear, gearWidth, gearHeight, initialColour, secondColour,
@@ -237,7 +247,6 @@ def optionsButtonGear (xButtonCoordinateGear, yButtonCoordinateGear, gearWidth, 
                                    ((yButtonCoordinateGear) + (gearHeight / 2)))  # centers the rect
 
         DISPLAYSURF.blit(gearIcon, gearIconPosition)  # blits the object
-
 
 
 # main game window
