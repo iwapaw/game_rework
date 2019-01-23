@@ -127,6 +127,12 @@ def sendToChopper(string, left, right):  # sends strings to the chopper
 
 # functions controls the flow of story strings
 def takeCurrentStoryString():
+        # a nested function that assigns proper story strings to keys
+        def dictionarySetter(currentStoryKey, currentLeftKey, currentRightKey):
+            StoryGameScreen.currentStoryString = storyStringDictionary[currentStoryKey]
+            StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
+            StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
+
         # ---- declarations ---------------------------------------------------------------------------------------
         global currentStoryKey
         global currentLeftKey
@@ -152,21 +158,19 @@ def takeCurrentStoryString():
             currentStoryKey = 'x01y00Story'
             currentLeftKey = 'x01y00Left'
             currentRightKey = 'x01y00Right'
-            StoryGameScreen.currentStoryString = storyStringDictionary[currentStoryKey]
-            StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
-            StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
 
         if currentStoryKey == 'x00y01Right':
             currentStoryKey = 'x00y01Story'
             currentLeftKey = 'x00y01Left'
             currentRightKey = 'x00y01Right'
-            StoryGameScreen.currentStoryString = storyStringDictionary[currentStoryKey]
-            StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
-            StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
+
+        dictionarySetter(currentStoryKey, currentLeftKey, currentRightKey)
 
         if storyLog[len(storyLog) - 1] != currentStoryKey:  # adds to the story log while avoiding duplicates
             storyLog.append(currentStoryKey)
         print(storyLog)
+
+
 
 
 
