@@ -191,25 +191,23 @@ def onScreenButton(textOnButton, xButtonCoordinate, yButtonCoordinate, buttonWid
     DISPLAYSURF.blit(buttonText, buttonPosition)   # blits the object
 
 
-
 def goLeftString(): # preparing the data for the next screen after choosing left
     gameScreenClasses.StoryGameScreen.dictionaryCleaner()  # cleans the dict
     gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
-                                                    gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
-    gameScreenClasses.StoryGameScreen.current_screen_setter() #method sets new properties to the current screen instance
-    if gameScreenClasses.currentStoryKey == " ":
+                                                    gameScreenClasses.StoryGameScreen.currentRightChoice)  # passing strings and choices to the chopper
+    gameScreenClasses.StoryGameScreen.current_screen_setter()  #method sets new properties to the current screen instance
+    if gameScreenClasses.StoryGameScreen.currentLeftChoice == "Choose: Keep staring":
         gameScreenClasses.currentStoryKey = 'x01y00Left'
     gameScreenClasses.takeCurrentStoryString()
-
 
 
 def goRightString(): # preparing the data for the next screen after choosing right
     gameScreenClasses.StoryGameScreen.dictionaryCleaner()  # cleans the dict
     gameScreenClasses.StoryGameScreen.stringChopper(gameScreenClasses.StoryGameScreen.currentStoryString,
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
-                                                    gameScreenClasses.StoryGameScreen.currentRightChoice) # passing strings and choices to the chopper
-    gameScreenClasses.StoryGameScreen.current_screen_setter() # method sets new properties to the current screen instance
+                                                    gameScreenClasses.StoryGameScreen.currentRightChoice)  # passing strings and choices to the chopper
+    gameScreenClasses.StoryGameScreen.current_screen_setter()  # method sets new properties to the current screen instance
     if gameScreenClasses.StoryGameScreen.currentRightChoice == "Choose: Close your eyes":
         gameScreenClasses.currentStoryKey = 'x00y01Right'
     gameScreenClasses.takeCurrentStoryString()
@@ -329,7 +327,7 @@ def toggleFullScreen(): # function goes full screen
 
 
 def main():
-    global FPSCLOCK, DISPLAYSURF # global declaration of frame counter and display surface object
+    global FPSCLOCK, DISPLAYSURF  # global declaration of frame counter and display surface object
 
     while True:  # main game loop
         for event in pygame.event.get():

@@ -97,6 +97,7 @@ currentRightKey = " "
 currentStoryString = ""
 currentLeftChoice = ""
 currentRightChoice = ""
+storyLog = ['start']
 
 # below the initial story string
 StoryGameScreen.currentStoryString = "It's been almost 30 months since Marius left with proconsul Julius Caesar's army. You're looking at the sunset as slaves prepare the house for the night."
@@ -106,7 +107,7 @@ StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
                               StoryGameScreen.currentLeftChoice,
                               StoryGameScreen.currentRightChoice)
 
-currentScreen = StoryGameScreen( # store the story in the dictionary
+currentScreen = StoryGameScreen(  # store the story in the dictionary
                                 StoryGameScreen.gameScreenStringDictionary['string0'],
                                 StoryGameScreen.gameScreenStringDictionary['string1'],
                                 StoryGameScreen.gameScreenStringDictionary['string2'],
@@ -135,27 +136,32 @@ def takeCurrentStoryString():
             'x01y00Left' : 'left2',
             'x01y00Right': 'right2',
             'x01y00Story': 'eyes hurt',
-            'x00y01Story': 'slaves working'
+            'x00y01Story': 'slaves working',
+            'x00y01Left': 'left3',
+            'x00y01Right': 'right3'
         }
-        # currentStoryString = ""
-        # currentLeftChoice = ""
-        # currentRightChoice = ""
 
         # ---- story strings --------------------------------------------------------------------------------------
         if currentStoryKey == 'x01y00Left':
-            currentStoryKey = 'x01y00Left'
+            currentStoryKey = 'x01y00Story'
             currentLeftKey = 'x01y00Left'
             currentRightKey = 'x01y00Right'
             StoryGameScreen.currentStoryString = storyStringDictionary[currentStoryKey]
             StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
             StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
 
+        if currentStoryKey == 'x00y01Right':
+            currentStoryKey = 'x00y01Story'
+            currentLeftKey = 'x00y01Left'
+            currentRightKey = 'x00y01Right'
+            StoryGameScreen.currentStoryString = storyStringDictionary[currentStoryKey]
+            StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
+            StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
 
+        if storyLog[len(storyLog) - 1] != currentStoryKey:
+            storyLog.append(currentStoryKey)
+        print(storyLog)
 
-        # ---- chop story ----------------------------------------------------------------------------------------
-        StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
-                                      StoryGameScreen.currentLeftChoice,
-                                      StoryGameScreen.currentRightChoice)
 
 
 
