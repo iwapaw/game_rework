@@ -89,15 +89,15 @@ class StoryGameScreen:  # a class that constructs a single instance of the game 
         StoryGameScreen.gameScreenStringDictionary.clear()
 
 
-chosenLeft = False
+chosenLeft = False  # flags for left and rights choices
 chosenRight = False
-currentStoryKey = " "
+currentStoryKey = " "  # stores the current key of the story dictionary
 currentLeftKey = " "
 currentRightKey = " "
-currentStoryString = ""
+currentStoryString = ""  # stores the current story strings
 currentLeftChoice = ""
 currentRightChoice = ""
-storyLog = ['start']
+storyLog = ['start']  # initializes the story log list
 
 # below the initial story string
 StoryGameScreen.currentStoryString = "It's been almost 30 months since Marius left with proconsul Julius Caesar's army. You're looking at the sunset as slaves prepare the house for the night."
@@ -118,12 +118,14 @@ currentScreen = StoryGameScreen(  # store the story in the dictionary
                                 StoryGameScreen.gameScreenStringDictionary['left'],
                                 StoryGameScreen.gameScreenStringDictionary['right'])
 
-def sendToChopper(string, left, right):
+
+def sendToChopper(string, left, right):  # sends strings to the chopper
     StoryGameScreen.stringChopper(string,
                                   left,
                                   right)
 
 
+# functions controls the flow of story strings
 def takeCurrentStoryString():
         # ---- declarations ---------------------------------------------------------------------------------------
         global currentStoryKey
@@ -132,8 +134,11 @@ def takeCurrentStoryString():
         global currentStoryString
         global currentLeftChoice
         global currentRightChoice
+        # dictionary for the actual story strings
+        # each strings in a one story screen
+        # strings are represented by Y&Z coordinates
         storyStringDictionary = {
-            'x01y00Left' : 'left2',
+            'x01y00Left': 'left2',
             'x01y00Right': 'right2',
             'x01y00Story': 'eyes hurt',
             'x00y01Story': 'slaves working',
@@ -142,6 +147,7 @@ def takeCurrentStoryString():
         }
 
         # ---- story strings --------------------------------------------------------------------------------------
+        # -- each function tests the current story string and picks a new one accordingly
         if currentStoryKey == 'x01y00Left':
             currentStoryKey = 'x01y00Story'
             currentLeftKey = 'x01y00Left'
@@ -158,7 +164,7 @@ def takeCurrentStoryString():
             StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
             StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
 
-        if storyLog[len(storyLog) - 1] != currentStoryKey:
+        if storyLog[len(storyLog) - 1] != currentStoryKey:  # adds to the story log while avoiding duplicates
             storyLog.append(currentStoryKey)
         print(storyLog)
 

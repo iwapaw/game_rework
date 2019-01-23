@@ -197,7 +197,7 @@ def goLeftString(): # preparing the data for the next screen after choosing left
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice)  # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter()  #method sets new properties to the current screen instance
-    if gameScreenClasses.StoryGameScreen.currentLeftChoice == "Choose: Keep staring":
+    if gameScreenClasses.StoryGameScreen.currentLeftChoice == "Choose: Keep staring":   # to set the second screen properly
         gameScreenClasses.currentStoryKey = 'x01y00Left'
     gameScreenClasses.takeCurrentStoryString()
 
@@ -208,7 +208,7 @@ def goRightString(): # preparing the data for the next screen after choosing rig
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice)  # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter()  # method sets new properties to the current screen instance
-    if gameScreenClasses.StoryGameScreen.currentRightChoice == "Choose: Close your eyes":
+    if gameScreenClasses.StoryGameScreen.currentRightChoice == "Choose: Close your eyes":  # to set the second screen properly
         gameScreenClasses.currentStoryKey = 'x00y01Right'
     gameScreenClasses.takeCurrentStoryString()
 
