@@ -26,6 +26,7 @@ gearIconInUnicode = u"\u2699" # unicode for gear character
 
 chosenLeft = False
 chosenRight = False
+gameRunning = True
 mouseClicked = pygame.mouse.get_pressed()  # variable to store mouse clicks
 mousePosition = pygame.mouse.get_pos()     # variable to store mouse position
 
@@ -97,7 +98,6 @@ def gameIntro():  # displays title screen
 
         # if the button is clicked and the main menu function is passed, it executes the main function
         if mouseClicked[0] == 1:
-            saveGame()
             pygame.time.delay(300)
             break
 
@@ -143,12 +143,12 @@ def gameMainMenu(): # main menu and settings
 
         DISPLAYSURF.fill(TITLESCREENCOLOUR)
 
-        onScreenButton('New',  xButtonCoordinateCenterScreen, topMenuButtonHeight, gameButtonWidth, gameButtonHeight,
+        onScreenButton('Play',  xButtonCoordinateCenterScreen, topMenuButtonHeight, gameButtonWidth, gameButtonHeight,
                        GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER, gameMainMenu,
                        gameWindowMain) # calls the button function - new game
         onScreenButton('Load', xButtonCoordinateCenterScreen, secondMenuButtonHeight, gameButtonWidth, gameButtonHeight,
                        GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,
-                       gameMainMenu, None)  # calls the button function - load game
+                       gameMainMenu, loadGame)  # calls the button function - load game
         onScreenButton('Save', xButtonCoordinateCenterScreen, thirdMenuButtonHeight, gameButtonWidth, gameButtonHeight,
                        GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,
                        gameMainMenu, saveGame)  # calls the button function - save game
@@ -164,9 +164,10 @@ def gameMainMenu(): # main menu and settings
                        gameMainMenu, infoScreen)  # calls the button function - quit
 
         optionsButtonGear(xGearButtonCoordinateGameWindow, yGearButtonCoordinateGameWindow, gearButtonWidth,
-                           gearButtonHeight,
-                           GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER, None)  # shifts between menu and gameplay
+                          gearButtonHeight, GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,
+                          gearResumeFunction)  # shifts between menu and gameplay
 
+        print(gameScreenClasses.currentStoryKey)
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
@@ -209,7 +210,7 @@ def goRightString(): # preparing the data for the next screen after choosing rig
                                                     gameScreenClasses.StoryGameScreen.currentLeftChoice,
                                                     gameScreenClasses.StoryGameScreen.currentRightChoice)  # passing strings and choices to the chopper
     gameScreenClasses.StoryGameScreen.current_screen_setter()  # method sets new properties to the current screen instance
-    if gameScreenClasses.StoryGameScreen.currentRightChoice == "Choose: Close your eyes":  # to set the second screen properly
+    if gameScreenClasses.StoryGameScreen.currentRightChoice == "Choose: Close eyes":  # to set the second screen properly
         gameScreenClasses.currentStoryKey = 'x00y01Right'
     gameScreenClasses.takeCurrentStoryString()
 
@@ -217,11 +218,21 @@ def goRightString(): # preparing the data for the next screen after choosing rig
 def saveGame():  # saves the game state - writes contents of the story log into binary file
     with open('game_save.obj', 'wb') as output_file:
         pickle.dump(gameScreenClasses.storyLog, output_file, pickle.HIGHEST_PROTOCOL)
+    with open('game_save2.obj', 'wb') as output_file2:
+        pickle.dump(gameScreenClasses.currentLeftKey, output_file2, pickle.HIGHEST_PROTOCOL)
+    with open('game_save3.obj', 'wb') as output_file3:
+        pickle.dump(gameScreenClasses.currentRightKey, output_file3, pickle.HIGHEST_PROTOCOL)
 
 
 def loadGame():  # loads a previously saved game state
-    with open('save_game.obj', 'rb') as input_file:
+    with open('game_save.obj', 'rb') as input_file:
         gameScreenClasses.storyLog = pickle.load(input_file)
+        gameScreenClasses.currentStoryKey = gameScreenClasses.storyLog[len(gameScreenClasses.storyLog) - 1]
+    with open('game_save2.obj', 'rb') as input_file2:
+        gameScreenClasses.currentLeftKey = pickle.load(input_file2)
+    with open('game_save3.obj', 'rb') as input_file3:
+        gameScreenClasses.currentRightKey = pickle.load(input_file3)
+    gameScreenClasses. 
 
 
 # function draws the gear icon
@@ -250,12 +261,13 @@ def optionsButtonGear (xButtonCoordinateGear, yButtonCoordinateGear, gearWidth, 
 
 
 # main game window
-def gameWindowMain(): # function to blit the game flow
-    gameRunning = True # variable the controls the game flow
+def gameWindowMain():  # function to blit the game flow
+    global gameRunning
+    gameRunning = True  # variable the controls the game flow
     global chosenRight
     global chosenLeft
 
-    while gameRunning: # game loop running as long as not quit or back to menu
+    while gameRunning:  # game loop running as long as not quit or back to menu
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == KEYUP and event.key == K_ESCAPE): # ESC exits
                 pygame.quit()
@@ -267,32 +279,43 @@ def gameWindowMain(): # function to blit the game flow
         DISPLAYSURF.fill(TITLESCREENCOLOUR)
 
         # strings to display are passed from gameScreenClasses file
-        xLineCoordinate = 100 # position from left to x
-        yLineCoordinate = 50 # posistion from top to y
-        lines = [gameScreenClasses.currentScreen.string0,gameScreenClasses.currentScreen.string1,
+        xLineCoordinate = 100  # position from left to x
+        yLineCoordinate = 50  # posistion from top to y
+        lines = [gameScreenClasses.currentScreen.string0, gameScreenClasses.currentScreen.string1,
                  gameScreenClasses.currentScreen.string2, gameScreenClasses.currentScreen.string3,
                  gameScreenClasses.currentScreen.string4, gameScreenClasses.currentScreen.string5,
                  gameScreenClasses.currentScreen.string6] # 95 characters per line
-        for line in lines: # for loop to display consecutive lines
-            line = gameMenuFont.render(line,True,GAMETITLECOLOUR,None) # render a line from "lines" array
+        for line in lines:  # for loop to display consecutive lines
+            line = gameMenuFont.render(line, True, GAMETITLECOLOUR, None)  # render a line from "lines" array
             linePosition = line.get_rect() # creates the object line
             linePosition.topleft = (xLineCoordinate,yLineCoordinate) # centers the line from topleft to passed x and y
-            DISPLAYSURF.blit(line,linePosition) # blits the game surface
-            yLineCoordinate+=35 # goes to the new line
+            DISPLAYSURF.blit(line,linePosition)  # blits the game surface
+            yLineCoordinate += 35  # goes to the new line
 
         # each button should have 12 characters
         # choices on buttons are passed from gameScreenClasses file
-        onScreenButton (gameScreenClasses.currentScreen.left, xLeftButtonCoordinateGameWindow,
+        onScreenButton(gameScreenClasses.currentScreen.left, xLeftButtonCoordinateGameWindow,
                         yLeftButtonCoordinateGameWindow,gameButtonWidth,gameButtonHeight,GAMETITLECOLOUR,
                         GAMETITLECOLOURBRIGHTER,gameMainMenu, goLeftString) # button for the left choice
         onScreenButton(gameScreenClasses.currentScreen.right, xRightButtonCoordinateGameWindow,
                        yRightButtonCoordinateGameWindow,gameButtonWidth,gameButtonHeight,GAMETITLECOLOUR,
                        GAMETITLECOLOURBRIGHTER,gameMainMenu, goRightString) # button for the right choice
-        optionsButtonGear (xGearButtonCoordinateGameWindow, yGearButtonCoordinateGameWindow, gearButtonWidth,
-                           gearButtonHeight,GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,None) # shifts between menu and gameplay
+        optionsButtonGear(xGearButtonCoordinateGameWindow, yGearButtonCoordinateGameWindow, gearButtonWidth,
+                           gearButtonHeight,GAMETITLECOLOUR, GAMETITLECOLOURBRIGHTER,
+                           gearPauseFunction)  # shifts between menu and gameplay
 
         pygame.display.update()
         FPSCLOCK.tick(FPS)
+
+
+def gearPauseFunction():
+    global gameRunning
+    gameRunning = False
+
+
+def gearResumeFunction():
+    global gameRunning
+    gameRunning = True
 
 
 def quitQameButton(): # function quits the game
@@ -345,14 +368,14 @@ def main():
                 sys.exit()
 
         gameIntro()
-        gameMainMenu()
+        if gameRunning:
+            gameMainMenu()
+        else:
+            gameWindowMain()
+        # gameMainMenu()
 
         pygame.display.update() # refreshes the screen
         FPSCLOCK.tick(FPS) # frame counter tick
-
-
-# gameIntro(gameMainMenu)
-# main()
 
 
 if __name__ == '__main__': main()

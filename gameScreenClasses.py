@@ -91,7 +91,7 @@ class StoryGameScreen:  # a class that constructs a single instance of the game 
 
 chosenLeft = False  # flags for left and rights choices
 chosenRight = False
-currentStoryKey = " "  # stores the current key of the story dictionary
+currentStoryKey = "start"  # stores the current key of the story dictionary
 currentLeftKey = " "
 currentRightKey = " "
 currentStoryString = ""  # stores the current story strings
@@ -99,13 +99,15 @@ currentLeftChoice = ""
 currentRightChoice = ""
 storyLog = ['start']  # initializes the story log list
 
+
 # below the initial story string
 StoryGameScreen.currentStoryString = "It's been almost 30 months since Marius left with proconsul Julius Caesar's army. You're looking at the sunset as slaves prepare the house for the night."
 StoryGameScreen.currentLeftChoice = "Choose: Keep staring"
-StoryGameScreen.currentRightChoice = "Choose: Close your eyes"
+StoryGameScreen.currentRightChoice = "Choose: Close eyes"
 StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
                               StoryGameScreen.currentLeftChoice,
                               StoryGameScreen.currentRightChoice)
+
 
 currentScreen = StoryGameScreen(  # store the story in the dictionary
                                 StoryGameScreen.gameScreenStringDictionary['string0'],
@@ -168,7 +170,7 @@ def takeCurrentStoryString():
 
         if storyLog[len(storyLog) - 1] != currentStoryKey:  # adds to the story log while avoiding duplicates
             storyLog.append(currentStoryKey)
-        print(storyLog)
+
 
 
 
