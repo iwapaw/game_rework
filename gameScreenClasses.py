@@ -66,8 +66,9 @@ class StoryGameScreen:  # a class that constructs a single instance of the game 
                                                         currentScreen.right)
         return StoryGameScreen.currentScreen
 
+    # a function that slices the string into string displayed on one of the seven lines
     @staticmethod
-    def stringChopper(stringToChop, leftChoice, rightChoice):  # a function that slices the string into string displayed on one of the seven lines
+    def stringChopper(stringToChop, leftChoice, rightChoice):
         j = 0  # a counter used to point to a specific entry in the dictionary
         global gameScreenStringDictionary  # accessing the global dictionary - function returns implicitly
 
@@ -91,7 +92,7 @@ class StoryGameScreen:  # a class that constructs a single instance of the game 
 
 chosenLeft = False  # flags for left and rights choices
 chosenRight = False
-currentStoryKey = " "  # stores the current key of the story dictionary
+currentStoryKey = "start"  # stores the current key of the story dictionary
 currentLeftKey = " "
 currentRightKey = " "
 currentStoryString = ""  # stores the current story strings
@@ -99,13 +100,15 @@ currentLeftChoice = ""
 currentRightChoice = ""
 storyLog = ['start']  # initializes the story log list
 
+
 # below the initial story string
 StoryGameScreen.currentStoryString = "It's been almost 30 months since Marius left with proconsul Julius Caesar's army. You're looking at the sunset as slaves prepare the house for the night."
 StoryGameScreen.currentLeftChoice = "Choose: Keep staring"
-StoryGameScreen.currentRightChoice = "Choose: Close your eyes"
+StoryGameScreen.currentRightChoice = "Choose: Close eyes"
 StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
                               StoryGameScreen.currentLeftChoice,
                               StoryGameScreen.currentRightChoice)
+
 
 currentScreen = StoryGameScreen(  # store the story in the dictionary
                                 StoryGameScreen.gameScreenStringDictionary['string0'],
@@ -127,7 +130,14 @@ def sendToChopper(string, left, right):  # sends strings to the chopper
 
 # functions controls the flow of story strings
 def takeCurrentStoryString():
+        # a nested function that assigns proper story strings to keys
+        def dictionarySetter(currentStoryKey, currentLeftKey, currentRightKey):
+            StoryGameScreen.currentStoryString = storyStringDictionary[currentStoryKey]
+            StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
+            StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
+
         # ---- declarations ---------------------------------------------------------------------------------------
+        global storyStringDictionary
         global currentStoryKey
         global currentLeftKey
         global currentRightKey
@@ -137,14 +147,14 @@ def takeCurrentStoryString():
         # dictionary for the actual story strings
         # each strings in a one story screen
         # strings are represented by Y&Z coordinates
-        storyStringDictionary = {
-            'x01y00Left': 'left2',
-            'x01y00Right': 'right2',
-            'x01y00Story': 'eyes hurt',
-            'x00y01Story': 'slaves working',
-            'x00y01Left': 'left3',
-            'x00y01Right': 'right3'
-        }
+        # storyStringDictionary = {
+        #     'x01y00Left': 'left2',
+        #     'x01y00Right': 'right2',
+        #     'x01y00Story': 'eyes hurt',
+        #     'x00y01Story': 'slaves working',
+        #     'x00y01Left': 'left3',
+        #     'x00y01Right': 'right3'
+        # }
 
         # ---- story strings --------------------------------------------------------------------------------------
         # -- each function tests the current story string and picks a new one accordingly
@@ -152,25 +162,32 @@ def takeCurrentStoryString():
             currentStoryKey = 'x01y00Story'
             currentLeftKey = 'x01y00Left'
             currentRightKey = 'x01y00Right'
-            StoryGameScreen.currentStoryString = storyStringDictionary[currentStoryKey]
-            StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
-            StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
 
         if currentStoryKey == 'x00y01Right':
             currentStoryKey = 'x00y01Story'
             currentLeftKey = 'x00y01Left'
             currentRightKey = 'x00y01Right'
-            StoryGameScreen.currentStoryString = storyStringDictionary[currentStoryKey]
-            StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
-            StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
+
+        dictionarySetter(currentStoryKey, currentLeftKey, currentRightKey)
 
         if storyLog[len(storyLog) - 1] != currentStoryKey:  # adds to the story log while avoiding duplicates
             storyLog.append(currentStoryKey)
-        print(storyLog)
 
 
+storyStringDictionary = {
+    'x01y00Left': 'left2',
+    'x01y00Right': 'right2',
+    'x01y00Story': 'eyes hurt',
+    'x00y01Story': 'slaves working',
+    'x00y01Left': 'left3',
+    'x00y01Right': 'right3'
+}
 
 
-
-
-
+def assignStringsAfterLoad():
+    StoryGameScreen.currentStoryString = currentStoryKey
+    StoryGameScreen.currentLeftChoice = currentLeftKey
+    StoryGameScreen.currentRightChoice = currentRightKey
+    StoryGameScreen.stringChopper(StoryGameScreen.currentStoryString,
+                                  StoryGameScreen.currentLeftChoice,
+                                  StoryGameScreen.currentRightChoice)
