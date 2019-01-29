@@ -1,4 +1,8 @@
-import pygame, sys, gameScreenClasses, config, pickle
+import pygame
+import sys
+import gameScreenClasses
+import config
+import pickle
 from pygame.locals import *
 
 # -- pickle is a module for serialization: https://docs.python.org/3/library/pickle.html

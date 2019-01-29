@@ -1,4 +1,6 @@
-import textwrap, config, time
+import textwrap
+import config
+import time
 
 
 class StoryGameScreen:  # a class that constructs a single instance of the game screen
@@ -99,6 +101,7 @@ currentStoryString = ""  # stores the current story strings
 currentLeftChoice = ""
 currentRightChoice = ""
 storyLog = ['start']  # initializes the story log list
+screen = 0
 
 
 # below the initial story string
@@ -132,9 +135,11 @@ def sendToChopper(string, left, right):  # sends strings to the chopper
 def takeCurrentStoryString():
         # a nested function that assigns proper story strings to keys
         def dictionarySetter(currentStoryKey, currentLeftKey, currentRightKey):
+            global screen
             StoryGameScreen.currentStoryString = storyStringDictionary[currentStoryKey]
             StoryGameScreen.currentLeftChoice = storyStringDictionary[currentLeftKey]
             StoryGameScreen.currentRightChoice = storyStringDictionary[currentRightKey]
+            screen += 1
 
         # ---- declarations ---------------------------------------------------------------------------------------
         global storyStringDictionary
@@ -144,6 +149,7 @@ def takeCurrentStoryString():
         global currentStoryString
         global currentLeftChoice
         global currentRightChoice
+        global screen
         # dictionary for the actual story strings
         # each strings in a one story screen
         # strings are represented by Y&Z coordinates
@@ -168,6 +174,16 @@ def takeCurrentStoryString():
             currentLeftKey = 'x00y01Left'
             currentRightKey = 'x00y01Right'
 
+        if currentStoryKey == 'x01y00Story' and screen == 2:
+            currentStoryKey = 'x02y00Story'
+            currentLeftKey = 'x02y00Right'
+            currentRightKey = 'x02y00Right'
+
+        if currentStoryKey == 'x00y01Story' and screen == 2:
+            currentStoryKey = 'x00y02Story'
+            currentLeftKey = 'x00y02Right'
+            currentRightKey = 'x00y02Right'
+
         dictionarySetter(currentStoryKey, currentLeftKey, currentRightKey)
 
         if storyLog[len(storyLog) - 1] != currentStoryKey:  # adds to the story log while avoiding duplicates
@@ -175,12 +191,21 @@ def takeCurrentStoryString():
 
 
 storyStringDictionary = {
-    'x01y00Left': 'left2',
-    'x01y00Right': 'right2',
-    'x01y00Story': 'eyes hurt',
-    'x00y01Story': 'slaves working',
-    'x00y01Left': 'left3',
-    'x00y01Right': 'right3'
+    'x01y00Left': 'Ask him in',
+    'x01y00Right': 'Go to the gate',
+    'x01y00Story': 'Your eyes hurt but you can\'t turn your head away. The pain helps your forget about everything: loneliness, burdens of managing the farm without Marius, due taxes that are meant to be paid with Marius\' war spoils. An old slaves approaches you and says "Lady, there is a centurion at the gate asking to speak with you".',
+
+    'x00y01Story': 'You go back to your memories. Last day before Marius left with the army. He didn\'t let slave clean his armor or tend to his horse. He had spent hours getting ready for the departure. It is easier to wage war than to tell goodbye. An old slaves approaches you and says "Lady, there is a centurion at the gate asking to speak with you".',
+    'x00y01Left': 'Ask him in',
+    'x00y01Right': 'Go to the gate',
+
+    'x02y00Left': 'Pray to Jupiter',
+    'x02y00Right': 'Pray to Mars',
+    'x02y00Story': '"Let him into the atrium" - you command - "I will meet him there". Instantly you\'re petrified. Centurion\'s visit could mean one thing: something had happened to Marius. You wait for few moments as you don\'t want to seem desperate. You take a deep breathe and head to the atrium.',
+
+    'x00y02Left': 'Pray to Jupiter',
+    'x00y02Right': 'Pray to Mars',
+    'x00y02Story': '"Did he say what is the reason of the visit at this time?" - you shout at the slave - "No, my lad. Lord centurion just asked to speak with you" - answers the old man with his eyes pointing to the ground. Your heart is pounding as you know what it means - oficer visiting woman\'s house at this time is to deliver grief news. You rush to the gate',
 }
 
 
