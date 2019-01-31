@@ -255,6 +255,8 @@ def goLeftString():  # preparing the data for the next screen after choosing lef
     if gameScreenClasses.StoryGameScreen.currentLeftChoice == "Choose: Keep staring":
         gameScreenClasses.currentStoryKey = 'x01y00Left'
     gameScreenClasses.takeCurrentStoryString()
+    pygame.time.delay(50)
+    config.chosenLeft = True
 
 
 def goRightString(): # preparing the data for the next screen after choosing right
@@ -269,6 +271,8 @@ def goRightString(): # preparing the data for the next screen after choosing rig
     if gameScreenClasses.StoryGameScreen.currentRightChoice == "Choose: Close eyes":
         gameScreenClasses.currentStoryKey = 'x00y01Right'
     gameScreenClasses.takeCurrentStoryString()
+    pygame.time.delay(50)
+    config.chosenRight = True
 
 
 def saveGame():  # saves the game state - writes contents of the story log into binary file
