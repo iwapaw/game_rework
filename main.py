@@ -1,4 +1,8 @@
-import pygame, sys, gameScreenClasses, config, pickle
+import pygame
+import sys
+import gameScreenClasses
+import config
+import pickle
 from pygame.locals import *
 
 # -- pickle is a module for serialization: https://docs.python.org/3/library/pickle.html
@@ -251,6 +255,8 @@ def goLeftString():  # preparing the data for the next screen after choosing lef
     if gameScreenClasses.StoryGameScreen.currentLeftChoice == "Choose: Keep staring":
         gameScreenClasses.currentStoryKey = 'x01y00Left'
     gameScreenClasses.takeCurrentStoryString()
+    pygame.time.delay(50)
+    config.chosenLeft = True
 
 
 def goRightString(): # preparing the data for the next screen after choosing right
@@ -265,6 +271,8 @@ def goRightString(): # preparing the data for the next screen after choosing rig
     if gameScreenClasses.StoryGameScreen.currentRightChoice == "Choose: Close eyes":
         gameScreenClasses.currentStoryKey = 'x00y01Right'
     gameScreenClasses.takeCurrentStoryString()
+    pygame.time.delay(50)
+    config.chosenRight = True
 
 
 def saveGame():  # saves the game state - writes contents of the story log into binary file
